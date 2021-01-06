@@ -54,7 +54,7 @@ class BubbleBaseLayout extends FrameLayout {
         this.params = params;
     }
 
-    WindowManager.LayoutParams getViewParams() {
+    public WindowManager.LayoutParams getViewParams() {
         return this.params;
     }
 
