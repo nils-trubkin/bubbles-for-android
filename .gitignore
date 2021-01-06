@@ -50,8 +50,6 @@ Thumbs.db
  
 # gradle directory
 .gradle
-gradlew
-gradlew.bat
 build/
 captures/
  
@@ -70,8 +68,6 @@ bar-deploy.sh
 HockeySDK.jar.properties
 ant.properties
 proguard
-
-*.jar.properties
 
 /local.properties
 
