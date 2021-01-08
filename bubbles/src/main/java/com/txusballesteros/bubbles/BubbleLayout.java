@@ -41,8 +41,11 @@ public class BubbleLayout extends BubbleBaseLayout {
     private float initialTouchY;
     private int initialX;
     private int initialY;
+    private int x;
+    private int y;
     private OnBubbleRemoveListener onBubbleRemoveListener;
     private OnBubbleClickListener onBubbleClickListener;
+    private OnBubbleReleaseListener onBubbleReleaseListener;
     private static final int TOUCH_TIME_THRESHOLD = 150;
     private long lastTouchDown;
     private MoveAnimator animator;
@@ -50,12 +53,24 @@ public class BubbleLayout extends BubbleBaseLayout {
     private WindowManager windowManager;
     private boolean shouldStickToWall = true;
 
+    public int getLastX() {
+        return x;
+    }
+
+    public int getLastY() {
+        return y;
+    }
+
     public void setOnBubbleRemoveListener(OnBubbleRemoveListener listener) {
         onBubbleRemoveListener = listener;
     }
 
     public void setOnBubbleClickListener(OnBubbleClickListener listener) {
         onBubbleClickListener = listener;
+    }
+
+    public void setOnBubbleReleaseListener(OnBubbleReleaseListener onBubbleReleaseListener) {
+        this.onBubbleReleaseListener = onBubbleReleaseListener;
     }
 
     public BubbleLayout(Context context) {
@@ -114,8 +129,8 @@ public class BubbleLayout extends BubbleBaseLayout {
                     animator.stop();
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    int x = initialX + (int)(event.getRawX() - initialTouchX);
-                    int y = initialY + (int)(event.getRawY() - initialTouchY);
+                    x = initialX + (int)(event.getRawX() - initialTouchX);
+                    y = initialY + (int)(event.getRawY() - initialTouchY);
                     getViewParams().x = x;
                     getViewParams().y = y;
                     getWindowManager().updateViewLayout(this, getViewParams());
@@ -125,6 +140,9 @@ public class BubbleLayout extends BubbleBaseLayout {
                     break;
                 case MotionEvent.ACTION_UP:
                     goToWall();
+                    if (onBubbleReleaseListener != null) {
+                        onBubbleReleaseListener.onBubbleRelease(this);
+                    }
                     if (getLayoutCoordinator() != null) {
                         getLayoutCoordinator().notifyBubbleRelease(this);
                         playAnimationClickUp();
@@ -183,6 +201,10 @@ public class BubbleLayout extends BubbleBaseLayout {
 
     public interface OnBubbleClickListener {
         void onBubbleClick(BubbleLayout bubble);
+    }
+
+    public interface OnBubbleReleaseListener {
+        void onBubbleRelease(BubbleLayout bubble);
     }
 
     public void goToWall() {
