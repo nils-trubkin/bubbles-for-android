@@ -28,7 +28,7 @@
 
     <objectAnimator
         android:duration="100"
-        android:interpolator="@android:interpolator/overshoot"
+        android:interpolator="@android:interpolator/decelerate_cubic"
         android:propertyName="scaleX"
         android:valueType="floatType"
         android:valueFrom="0.0f"
@@ -36,7 +36,7 @@
 
     <objectAnimator
         android:duration="100"
-        android:interpolator="@android:interpolator/overshoot"
+        android:interpolator="@android:interpolator/decelerate_cubic"
         android:propertyName="scaleY"
         android:valueType="floatType"
         android:valueFrom="0.0f"
