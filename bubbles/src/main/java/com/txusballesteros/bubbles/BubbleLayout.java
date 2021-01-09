@@ -46,6 +46,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private OnBubbleRemoveListener onBubbleRemoveListener;
     private OnBubbleClickListener onBubbleClickListener;
     private OnBubbleReleaseListener onBubbleReleaseListener;
+    private OnBubbleMoveListener onBubbleMoveListener;
     private static final int TOUCH_TIME_THRESHOLD = 150;
     private long lastTouchDown;
     private MoveAnimator animator;
@@ -71,6 +72,10 @@ public class BubbleLayout extends BubbleBaseLayout {
 
     public void setOnBubbleReleaseListener(OnBubbleReleaseListener onBubbleReleaseListener) {
         this.onBubbleReleaseListener = onBubbleReleaseListener;
+    }
+
+    public void setOnBubbleMoveListener(OnBubbleMoveListener onBubbleMoveListener) {
+        this.onBubbleMoveListener = onBubbleMoveListener;
     }
 
     public BubbleLayout(Context context) {
@@ -136,6 +141,9 @@ public class BubbleLayout extends BubbleBaseLayout {
                     getWindowManager().updateViewLayout(this, getViewParams());
                     if (getLayoutCoordinator() != null) {
                         getLayoutCoordinator().notifyBubblePositionChanged(this, x, y);
+                    }
+                    if (onBubbleMoveListener != null) {
+                        onBubbleMoveListener.onBubbleMove(this);
                     }
                     break;
                 case MotionEvent.ACTION_UP:
@@ -205,6 +213,10 @@ public class BubbleLayout extends BubbleBaseLayout {
 
     public interface OnBubbleReleaseListener {
         void onBubbleRelease(BubbleLayout bubble);
+    }
+
+    public interface OnBubbleMoveListener {
+        void onBubbleMove(BubbleLayout bubble);
     }
 
     public void goToWall() {
