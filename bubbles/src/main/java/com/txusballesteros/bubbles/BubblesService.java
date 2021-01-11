@@ -93,6 +93,11 @@ public class BubblesService extends Service {
         addViewToWindow(bubble);
     }
 
+    public void moveBubble(BubbleLayout bubble, int x, int y) {
+        WindowManager.LayoutParams layoutParams = buildLayoutParamsForBubble(x, y);
+        bubble.setViewParams(layoutParams);
+    }
+
     void addTrash(int trashLayoutResourceId) {
         if (trashLayoutResourceId != 0) {
             bubblesTrash = new BubbleTrashLayout(this);
