@@ -54,6 +54,10 @@ class BubbleBaseLayout extends FrameLayout {
         this.params = params;
     }
 
+    void notifyBubblePositionChanged(BubbleLayout bubble, int x, int y){
+        layoutCoordinator.notifyBubblePositionChanged(bubble, x, y);
+    }
+
     public WindowManager.LayoutParams getViewParams() {
         return this.params;
     }
