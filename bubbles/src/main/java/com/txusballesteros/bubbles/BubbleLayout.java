@@ -34,6 +34,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.ViewParent;
 import android.view.WindowManager;
 
 public class BubbleLayout extends BubbleBaseLayout {
@@ -124,6 +125,8 @@ public class BubbleLayout extends BubbleBaseLayout {
         if (event != null) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    ViewParent parent = getParent();
+                    if (parent != null) parent.requestDisallowInterceptTouchEvent(true);
                     initialX = getViewParams().x;
                     initialY = getViewParams().y;
                     initialTouchX = event.getRawX();
