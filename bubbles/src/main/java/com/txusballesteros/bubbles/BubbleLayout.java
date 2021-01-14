@@ -123,10 +123,10 @@ public class BubbleLayout extends BubbleBaseLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event != null) {
+            ViewParent parent = getParent();
+            if (parent != null) parent.requestDisallowInterceptTouchEvent(true);
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    ViewParent parent = getParent();
-                    if (parent != null) parent.requestDisallowInterceptTouchEvent(true);
                     initialX = getViewParams().x;
                     initialY = getViewParams().y;
                     initialTouchX = event.getRawX();
